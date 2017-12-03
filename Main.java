@@ -1,35 +1,24 @@
 
-public class Main {
-    // class Card {
-    //     Suit suit;
-    //     Rank rank;
-    // }
-    public enum Suit {HEARTS, SPADES, DIAMONDS, CLUBS};
-    public enum Rank {
-        TWO,
-        THREE,
-        FOUR,
-        FIVE,
-        SIX,
-        SEVEN,
-        EIGHT,
-        NINE,
-        TEN,
-        JACK,
-        QUEEN,
-        KING,
-        ACE;
-    };
+class Main {
 
     public static void main(String[] args) {
-        for (Suit suit : Suit.values()) {
-            System.out.println(suit);
-        }
-        for (Rank rank : Rank.values()) {
-            System.out.println(rank);
-        }
-        // for (Card card : Card.values()) {
-        //     System.out.println(card);
+
+        Deck deck = new Deck(1);
+
+        int n = deck.size();
+        deck.shuffle();
+
+        System.out.println(n);
+
+        // int i = 0;
+        // while (i < n) {
+        //     Card card = deck.dealCard();
+        //     System.out.print(card.rank.toString().toLowerCase());
+        //     System.out.print(" of ");
+        //     System.out.println(card.suit.toString().toLowerCase());
+        //     System.out.println(deck.size());
+        //     i++;
         // }
+
     }
 }

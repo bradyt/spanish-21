@@ -1,0 +1,36 @@
+
+* use maven or gradle
+* use IDE
+* lombok
+
+import lombok.Value fails
+download lombok.jar
+
+* website learning resources
+
+https://www.javatpoint.com/java-tutorial
+
+* notes
+
+what is a card object
+
+may have a string representation, but also should have
+natural ability to be compared, and retrieve values.
+especially the ace will have a special property, not simply a single value
+
+could simply have cards indexed as
+
+1, 2, ..., 10, 11, 12, 13
+
+where 1 maps to ace and game can score as 1 or 11
+11, 12, 13, map to J, Q, K, and score as 10.
+
+** representing cards as objects
+
+i can either use some enumeration
+
+what is simple way of doing this?
+
+just have two lists of strings, and
+
+*** let's study how enums work in java
