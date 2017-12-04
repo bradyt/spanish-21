@@ -1,4 +1,3 @@
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +25,4 @@ class Deck {
         return deck.remove(0);
     }
 
-    int size() {
-        return deck.size();
-    }
 }

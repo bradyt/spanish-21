@@ -1,4 +1,64 @@
 
+* my plan today
+
+write a Main.java that deals to a dealer and a player, and describes
+cards and the value of the hand.
+
+we'd also like to write tests.
+- test Suit, Rank
+- test Card for each Suit and Rank
+- test Deck, number of cards, running out at n * 52 or 48
+- 
+
+* i have some of the basic elements defined
+like Card, Deck
+
+but i think for the progression of play, i need to think about the
+flow of gameplay. at some point, the strategy comes in, and also the
+rules.
+
+i think rules can various attributes, and as the board offers choices
+to the player, they may refer to the rules to decide what actions are
+accessible.
+
+
+* research flowcharts for blackjack
+
+* what is a simulation?
+
+between shuffles, we can have a continuous test
+
+
+
+
+
+* object design
+
+_Strategy_
+could have a class called Strategy, so dealer could have a simple
+strategy, and we can use various methods to determine player's
+strategy.
+
+the strategy could have a method to except the card most recently
+dealt, so that it can determine dependent strategy, this should be
+enough information.
+
+_Rules_
+we can abstract out rules, to see when player is allowed to do things.
+
+however, this would be coupled with strategy.
+
+* strategy research
+
+https://digitalcommons.usu.edu/cgi/viewcontent.cgi?referer=https://www.google.com/&httpsredir=1&article=1528&context=gradreports
+
+having a strategy might be based on already knowing the probabilities
+for each hand or game, maybe then recursively or similar.
+
+openai/gym: A toolkit for developing and comparing reinforcement learning algorithms.
+https://github.com/openai/gym
+
+
 * use maven or gradle
 * use IDE
 * lombok
@@ -10,6 +70,7 @@ download lombok.jar
 
 https://www.javatpoint.com/java-tutorial
 
+* TODO cleanup git history
 * notes
 
 what is a card object
