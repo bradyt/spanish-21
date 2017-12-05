@@ -1,0 +1,55 @@
+
+* H17,RD,not yet, csv
+,2,3,4,5,6,7,8,9,10,A
+5,H,H,H,H,D,H,H,H,H,H
+6,H,H,H,H,D,H,H,H,H,H
+7,H,H,H,H,D,H,H,H,H,H
+8,H,H,H,D,D,H,H,H,H,H
+9,H,D4,D,D,D,H,H,H,H,H
+10,D5,D5,D,D,D,D,D5,H,H,H
+11,D4,D5,D5,D5,D5,D5,D5,D4,D3,D3
+12,H,H,H,H,H,H,H,H,H,H
+13,H,H,H,H,S4*,H,H,H,H,H
+14,H,H,S4*,S5',S6",H,H,H,H,H
+15,S4*,S5',S6,S6,S,H,H,H,H,H
+16,S6,S6,S6,S,S,H,H,H,H,RH
+17,S,S,S,S,S,S6,S6,S6,S6,RH
+A2,H,D3,D,D,D,H,H,H,H,H
+A3,H,D3,D4,D,D,H,H,H,H,H
+A4,H,H,D4,D4,D5,H,H,H,H,H
+A5,H,H,D4,D4,D5,H,H,H,H,H
+A6,H,H,D4,D4,D5,H,H,H,H,H
+A7,S4,S4,D4,D5,D6,S6,S4,H,H,H
+A8,S,S,S,S,S,S,S,S,S6,S6
+22,P,P,P,P,P,P,P,H,H,H
+33,P,P,P,P,P,P,P,H,H,H
+66,H,H,P,P,P,H,H,H,H,H
+77,P,P,P,P,P,P$,H,H,H,H
+88,P,P,P,P,P,P,P,P,P,R
+99,S,P,P,P,P,S,P,P,S,S
+AA,P,P,P,P,P,P,P,P,P,P
+
+DD Surrender: 12-16 vs 8-A; 17 vs A 
+never split 4s, 52, 10s
+
+* H17,RD,has doubled,hard, csv
+,2,3,4,5,6,7,8,9,10,A
+6,S,D,D,D,D,D,R,R,R,R
+7,D,D,D,D,D,D,R,R,R,R
+8,D,D,D,D,D,D,D,D,R,R
+9,D,D,D,D,D,D,D,D,D,D
+10,D,D,D,D,D,D,D,D,D,D
+11,D,D,D,D,D,D,D,D,D,D
+12,S,S,S,S,S,D,D,R,R,R
+13,S,S,S,S,S,S,R,R,R,R
+14,S,S,S,S,S,S,R,R,R,R
+15,S,S,S,S,S,S,R,R,R,R
+16,S,S,S,S,S,S,R,R,R,R
+17,S,S,S,S,S,S,S,S,S,R
+18-21,S,S,S,S,S,S,S,S,S,S
+
+* H17,RD,has doubled,soft, csv
+,2,3,4,5,6,7,8,9,10,A
+13-17,D,D,D,D,D,D,D,D,D,D
+18,S,S,S,D,D,D,S,S,S,S
+19-21,S,S,S,S,S,S,S,S,S,S
