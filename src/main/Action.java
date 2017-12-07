@@ -5,4 +5,3 @@ enum Action {
     SPLIT,
     SURRENDER;
 }
-    

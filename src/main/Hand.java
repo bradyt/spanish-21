@@ -3,7 +3,8 @@ import java.util.ArrayList;
 
 class Hand {
 
-    ArrayList<Card> hand;
+    private ArrayList<Card> hand;
+    private boolean soft;
 
     Hand () {
         hand = new ArrayList<Card>();
@@ -13,24 +14,35 @@ class Hand {
         hand.add(card);
     }
 
-    int getValue() {
+    int getPointTotal() {
         int aces = 0;
-        int value = 0;
+        int ptTot = 0;
         for (Card card : hand) {
-            if (card.isAce()) {
+            if (card.equals(Rank.ACE)) {
                 aces++;
             }
-            value = value + card.point;
+            ptTot = ptTot + card.point;
         }
-        while (value > 21 && aces > 0) {
-            value -= 10;
+        while (ptTot > 21 && aces > 0) {
+            ptTot -= 10;
             aces--;
         }
-        return value;
+        return ptTot;
     }
 
     ArrayList<Card> getCards() {
         return hand;
     }
 
+    boolean isBlackjack() {
+        return (hand.size() == 2 && getPointTotal() == 21);
+    }
+
+    // Hand duplicateHand() {
+    //     Hand newHand = new Hand(bet);
+    //     for (Card card : hand) {
+    //         newHand.addCard(card);
+    //     }
+    //     return newHand;
+    // }
 }

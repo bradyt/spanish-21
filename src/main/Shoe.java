@@ -2,27 +2,28 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-class Deck {
+class Shoe {
 
-    List<Card> deck;
+    private List<Card> shoe;
 
-    Deck(int numOfDecks) {
-        deck = new ArrayList<Card>();
+    Shoe(int numOfDecks) {
+        shoe = new ArrayList<Card>();
         for (int i = 0; i < numOfDecks; i++) {
             for (Suit suit : Suit.values()) {
                 for (Rank rank : Rank.values()) {
-                    deck.add(new Card(suit, rank));
+                    shoe.add(new Card(suit, rank));
                 }
             }
         }
+        // shoe.shuffle()
     }
 
     void shuffle() {
-        Collections.shuffle(deck);
+        Collections.shuffle(shoe);
     }
 
     Card dealCard() {
-        return deck.remove(0);
+        return shoe.remove(0);
     }
 
 }

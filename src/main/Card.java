@@ -17,7 +17,7 @@ class Card {
         }
     }
 
-    boolean isAce() {
-        return rank.equals(Rank.ACE);
-    }
+    // boolean isAce() {
+    //     return rank.equals(Rank.ACE);
+    // }
 }
