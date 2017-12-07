@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
 class Card {
-    Suit suit;
-    Rank rank;
-    int point;
+    private Suit suit;
+    private Rank rank;
+    private int point;
 
     Card (Suit suit, Rank rank) {
         this.suit = suit;
@@ -17,7 +17,19 @@ class Card {
         }
     }
 
-    // boolean isAce() {
-    //     return rank.equals(Rank.ACE);
-    // }
+    Suit getSuit() {
+        return suit;
+    }
+
+    Rank getRank() {
+        return rank;
+    }
+
+    int getPoint() {
+        return point;
+    }
+    
+    public String toString() {
+        return rank.toString().toLowerCase() + " of " + suit.toString().toLowerCase();
+    }
 }

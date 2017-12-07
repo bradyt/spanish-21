@@ -21,7 +21,7 @@ class Hand {
             if (card.equals(Rank.ACE)) {
                 aces++;
             }
-            ptTot = ptTot + card.point;
+            ptTot = ptTot + card.getPoint();
         }
         while (ptTot > 21 && aces > 0) {
             ptTot -= 10;
@@ -38,11 +38,11 @@ class Hand {
         return (hand.size() == 2 && getPointTotal() == 21);
     }
 
-    // Hand duplicateHand() {
-    //     Hand newHand = new Hand(bet);
-    //     for (Card card : hand) {
-    //         newHand.addCard(card);
-    //     }
-    //     return newHand;
-    // }
+    public String toString() {
+        String result = "";
+        for (Card card : getCards()) {
+            result += card.toString();
+        }
+        return result;
+    }
 }

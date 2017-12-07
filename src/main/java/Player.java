@@ -25,7 +25,7 @@ class Player {
         actionableBets.get(0).addCard(card);
     }
 
-    int getValue() {
+    int getPointTotal() {
         return actionableBets.get(0).getPointTotal();
     }
 
@@ -35,5 +35,9 @@ class Player {
 
     void popBet() {
         actionableBets.remove(0);
+    }
+
+    void printMoney() {
+        System.out.println(money);
     }
 }

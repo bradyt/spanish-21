@@ -6,11 +6,49 @@ class Main {
         Hand dealer = new Hand();
         Player player = new Player(100);
 
+        // System.out.println(table);
+
         player.addBet(5);
 
         table.dealHands(dealer, player);
 
+        // System.out.println("# player has " + player.getPointTotal());
+        // System.out.println(dealer);
+        // System.out.println(table);
+
+        // for (Card card : dealer.getCards()) {
+        //     System.out.println(card);
+        // }
+
         table.assessBlackjacks(dealer, player);
+
+        // System.out.println("# player has " + player.getPointTotal());
+
+        // for (Card card : playersHand.getCards()) {
+        //     System.out.print(card.rank.toString().toLowerCase());
+        //     System.out.print(" of ");
+        //     System.out.println(card.suit.toString().toLowerCase());
+        //     System.out.print("point is ");
+        //     System.out.println(card.point);
+        // }
+        // System.out.println("# dealer has " + dealersHand.getValue());
+        // for (Card card : dealersHand.getCards()) {
+        //     System.out.print(card.rank.toString().toLowerCase());
+        //     System.out.print(" of ");
+        //     System.out.println(card.suit.toString().toLowerCase());
+        //     System.out.print("point is ");
+        //     System.out.println(card.point);
+        // }
+
+
+        // Card card = shoe.dealCard();
+        // System.out.print(card.rank.toString().toLowerCase());
+        // System.out.print(" of ");
+        // System.out.println(card.suit.toString().toLowerCase());
+        // System.out.print("point is ");
+        // System.out.println(card.point);
+
+
 
         // while (player.hasActionableBets()) {
         //     Bet bet = player.popBet();
@@ -107,32 +145,6 @@ class Main {
           we check for hit, stand, etc, until loop is broken
          */
 
-
-        // System.out.println("# player has " + playersHand.getValue());
-
-        // for (Card card : playersHand.getCards()) {
-        //     System.out.print(card.rank.toString().toLowerCase());
-        //     System.out.print(" of ");
-        //     System.out.println(card.suit.toString().toLowerCase());
-        //     System.out.print("point is ");
-        //     System.out.println(card.point);
-        // }
-        // System.out.println("# dealer has " + dealersHand.getValue());
-        // for (Card card : dealersHand.getCards()) {
-        //     System.out.print(card.rank.toString().toLowerCase());
-        //     System.out.print(" of ");
-        //     System.out.println(card.suit.toString().toLowerCase());
-        //     System.out.print("point is ");
-        //     System.out.println(card.point);
-        // }
-
-
-        // Card card = shoe.dealCard();
-        // System.out.print(card.rank.toString().toLowerCase());
-        // System.out.print(" of ");
-        // System.out.println(card.suit.toString().toLowerCase());
-        // System.out.print("point is ");
-        // System.out.println(card.point);
 
     }
 }
