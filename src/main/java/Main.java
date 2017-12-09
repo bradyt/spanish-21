@@ -1,16 +1,42 @@
+import java.io.File;
+import java.io.Reader;
+import java.io.FileReader;
+import org.apache.commons.csv.*;
+
 class Main {
 
     public static void main(String[] args) {
 
-        Table table = new Table(Rules.H17REDOUBLE, 5);
-        Hand dealer = new Hand();
-        Player player = new Player(100);
+        // File f = new File("src/main/resources/h17-hard.csv");
+        // System.out.println(f.exists());
+        // System.out.println(System.getProperty("user.dir"));
 
-        // System.out.println(table);
+        Reader in = new FileReader("src/main/resources/h17-hard.csv");
+        Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
+        for (CSVRecord record : records) {
+            System.out.println(records);
+        }
 
-        player.addBet(5);
+        // Dealer dealer = new Dealer(Rules.H17REDOUBLE, new Shoe(5));
 
-        table.dealHands(dealer, player);
+        // dealer.shuffle();
+
+        // dealer.addPlayer(100);
+
+        // dealer.getPlayer().addBet(5);
+
+        // dealer.dealHands();
+
+        // dealer.assessBlackjacks();
+
+        // while (dealer.getPlayer().hasActionableBets()) {
+        //     // tricky part
+        //     break;
+        // }
+
+        // dealer.takesTurn();
+
+        // dealer.assessPayouts();
 
         // System.out.println("# player has " + player.getPointTotal());
         // System.out.println(dealer);
@@ -20,7 +46,6 @@ class Main {
         //     System.out.println(card);
         // }
 
-        table.assessBlackjacks(dealer, player);
 
         // System.out.println("# player has " + player.getPointTotal());
 
@@ -95,15 +120,6 @@ class Main {
         //     }
         // }
 
-        // while (true) { // while dealer needs cards
-        //     if (dealer.getValue() <= 16) {
-        //         dealer.addCard(shoe.dealCard());
-        //     } else if (dealer.getValue() > 17 || rules.equals(Rules.S17)) {
-        //         break;
-        //     } else if (dealer.isSoft()) {
-        //         dealer.addCard(shoe.dealCard());
-        //     } else break;
-        // }
         // if (dealersHand > playersHand) {
         //     player.loses();
         // } else {

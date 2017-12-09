@@ -5,5 +5,11 @@ repositories {
 }
 
 dependencies {
+  compile 'org.apache.commons:commons-csv:1.5'
   testCompile 'junit:junit:4.12'
+  testCompile 'com.pholser:junit-quickcheck-core:0.7'
 }
+
+// tasks.withType(JavaCompile) {
+//   options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+// }
