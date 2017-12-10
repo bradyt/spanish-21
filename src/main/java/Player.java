@@ -2,18 +2,22 @@ import java.util.ArrayList;
 
 class Player {
 
-    private int money;
+    private float money;
     private ArrayList<Bet> stoodBets;
     private ArrayList<Bet> actionableBets;
     private int numOfSplits;
 
-    Player(int money) {
+    Player(float money) {
         this.money = money;
         stoodBets = new ArrayList<Bet>();
         actionableBets = new ArrayList<Bet>();
     }
 
-    void addBet(int bet) {
+    float getMoney() {
+        return money;
+    }
+
+    void addBet(float bet) {
         actionableBets.add(new Bet(bet));
     }
 
@@ -30,7 +34,10 @@ class Player {
     }
 
     void increaseMoneyByBet(float payout) {
-        money += payout * actionableBets.get(0).getBetAmount();
+        System.out.println(payout);
+        float delta = payout * actionableBets.get(0).getBetAmount();
+        System.out.println(delta);
+        money += delta;
     }
 
     void popBet() {

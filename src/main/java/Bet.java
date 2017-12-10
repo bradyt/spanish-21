@@ -1,14 +1,23 @@
 // should add a method to duplicate a hand/bet
 class Bet extends Hand {
 
-    private int bet;
+    private float bet;
     private int numOfDoublings;
 
-    Bet(int bet) {
+    Bet(float bet) {
         this.bet = bet;
+        numOfDoublings = 0;
     }
 
-    int getBetAmount() {
+    float getBetAmount() {
         return bet;
+    }
+
+    int getNumOfDoublings() {
+        return numOfDoublings;
+    }
+
+    void incrementNumOfDoublings() {
+        numOfDoublings++;
     }
 }

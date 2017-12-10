@@ -25,6 +25,14 @@ class Card {
         return rank;
     }
 
+    String getLookupFormat() {
+        if (point == 11) {
+            return "A";
+        } else {
+            return Integer.toString(point);
+        }
+    }
+
     int getPoint() {
         return point;
     }

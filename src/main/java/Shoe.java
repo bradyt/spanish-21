@@ -15,7 +15,12 @@ class Shoe {
                 }
             }
         }
-        // shoe.shuffle()
+    }
+
+    void addCard(String suit, String rank) {
+        Suit s = Suit.valueOf(suit.toUpperCase());
+        Rank r = Rank.valueOf(rank.toUpperCase());
+        shoe.add(new Card(s, r));
     }
 
     void shuffle() {

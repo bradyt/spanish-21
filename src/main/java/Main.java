@@ -1,21 +1,33 @@
-import java.io.File;
-import java.io.Reader;
-import java.io.FileReader;
+import java.util.*;
+import java.io.*;
 import org.apache.commons.csv.*;
 
 class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
 
-        // File f = new File("src/main/resources/h17-hard.csv");
-        // System.out.println(f.exists());
-        // System.out.println(System.getProperty("user.dir"));
+        Strategy strategy = new Strategy(Rules.H17REDOUBLE);
+        Bet bet = new Bet(5);
+        bet.addCard(new Card(Suit.CLUBS, Rank.NINE));
+        bet.addCard(new Card(Suit.CLUBS, Rank.NINE));
+        ArrayList<String> row = strategy.getRow(bet);
+        String cell = strategy.getCell(bet, 5);
+        // ArrayList<ArrayList<String>> table = strategy
+        //     .getTable(strategy.pickTable(bet));
 
-        Reader in = new FileReader("src/main/resources/h17-hard.csv");
-        Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
-        for (CSVRecord record : records) {
-            System.out.println(records);
-        }
+        System.out.println(row.toString());
+        System.out.println(cell);
+
+        boolean pair = false;
+        boolean soft = false;
+        boolean doubled = false;
+
+        // String string = strategy.getString(pair, soft, doubled);
+        // System.out.println(string);
+
+
+        // String lookup(String hand, String upCard) {
+
 
         // Dealer dealer = new Dealer(Rules.H17REDOUBLE, new Shoe(5));
 
