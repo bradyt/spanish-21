@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 public class TestIsSoft {
 
+    @Test
     public void testIsSoft() {
         Suit suit = Suit.CLUBS;
         Card ace = new Card(suit, Rank.ACE);
@@ -11,10 +12,7 @@ public class TestIsSoft {
         Card jack = new Card(suit, Rank.JACK);
 
         checkSoft(true, ace, jack);
-        checkSoft(true, ace, jack, two);
-        // checkSoft(true, ace, jack);
-        // checkSoft(true, ace, jack);
-        // checkSoft(true, ace, jack);
+        checkSoft(false, ace, jack, two);
     }
 
     public void checkSoft(boolean checkIsSoft, Card... cards) {

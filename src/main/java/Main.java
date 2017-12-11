@@ -4,23 +4,39 @@ import org.apache.commons.csv.*;
 
 class Main {
 
+    public static void checkSoft(boolean checkIsSoft, Card... cards) {
+        Hand hand = new Hand();
+        for (Card card : cards) {
+            hand.addCard(card);
+        }
+        if (checkIsSoft) {
+            System.out.println(hand);
+            System.out.println(hand.isSoft());
+            assert(hand.isSoft());
+        } else {
+            System.out.println(hand);
+            System.out.println(hand.isSoft());
+            assert(!hand.isSoft());
+        }
+    }
+
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
-        Strategy strategy = new Strategy(Rules.H17REDOUBLE);
-        Bet bet = new Bet(5);
-        bet.addCard(new Card(Suit.CLUBS, Rank.NINE));
-        bet.addCard(new Card(Suit.CLUBS, Rank.NINE));
-        ArrayList<String> row = strategy.getRow(bet);
-        String cell = strategy.getCell(bet, 5);
-        // ArrayList<ArrayList<String>> table = strategy
-        //     .getTable(strategy.pickTable(bet));
+        // Strategy strategy = new Strategy(Rules.H17REDOUBLE);
+        // Bet bet = new Bet(5);
+        // bet.addCard(new Card(Suit.CLUBS, Rank.NINE));
+        // bet.addCard(new Card(Suit.CLUBS, Rank.NINE));
+        // ArrayList<String> row = strategy.getRow(bet);
+        // String cell = strategy.getCell(bet, 5);
+        // // ArrayList<ArrayList<String>> table = strategy
+        // //     .getTable(strategy.pickTable(bet));
 
-        System.out.println(row.toString());
-        System.out.println(cell);
+        // System.out.println(row.toString());
+        // System.out.println(cell);
 
-        boolean pair = false;
-        boolean soft = false;
-        boolean doubled = false;
+        // boolean pair = false;
+        // boolean soft = false;
+        // boolean doubled = false;
 
         // String string = strategy.getString(pair, soft, doubled);
         // System.out.println(string);

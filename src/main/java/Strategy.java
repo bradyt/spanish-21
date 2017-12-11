@@ -9,8 +9,125 @@ class Strategy {
         this.rules = rules;
     }
 
-    // Action getAction(Hand hand, Card card, boolean hasDoubled) {
+    // Action getAction(Bet bet, int upcardPoint) {
     // }
+
+    /* this class, first uses rules and bet to determine correct table
+     * (or short circuits the table). once it has the correct table,
+     * we get the appropriate row, and the appropriate cell.
+     * at this point, we can work on the cell value to get the
+     * correct action
+     */
+
+    Action getAction(Bet bet, int upcardPoint, int numOfSplits) {
+
+        String action = getStrategyString(bet, upcardPoint);
+
+        char actionChar = action.toUpperCase().charAt(0);
+        int digit = getDigit(action);
+        char specialChar = getSpecialChar(action);
+
+        if (bet.getCards().size() >= digit) {return Action.HIT;}
+        if (possible678AgainstSpecialChar(bet, specialChar)) {
+            return Action.HIT;
+        }
+        if (action.equals("p$") && isSuited(bet)) {return Action.HIT;}
+
+        switch (actionChar) {
+        case 'H': return Action.HIT;
+        case 'S': return Action.STAND;
+        case 'P': return Action.SPLIT;
+        case 'D': return Action.DOUBLE;
+        case 'R': return Action.SURRENDER;
+        }
+        return Action.HIT;
+    }
+
+    // boolean suitedSevens(Hand hand) {
+    //     for (Card card : hand.getCards()) {
+    //         if (card.getRank() != Rank.SEVEN) {
+    //             return false;
+    //         }
+    //     }
+    //     return isSuited(hand);
+    // }
+
+    boolean possible678(Bet bet) {
+        int pt0 = bet.getCards().get(0).getPoint();
+        int pt1 = bet.getCards().get(1).getPoint();
+        if (pt0 == 6 && pt1 == 7 || pt1 == 8) {
+            return true;
+        }
+        if (pt0 == 7 && pt1 == 6 || pt1 == 8) {
+            return true;
+        }
+        if (pt0 == 8 && pt1 == 6 || pt1 == 7) {
+            return true;
+        }
+        return false;
+    }
+ 
+    boolean possible678AgainstSpecialChar(Bet bet, char specialChar) {
+        List<Integer> sixSevenEight = Arrays.asList(6, 7, 8);
+        boolean bool = possible678(bet);
+        if (bool == true) {
+            if (specialChar == '*') {
+                return true;
+            } else if (specialChar == '\'') {
+                if (isSuited(bet) || isSpaded(bet)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if (specialChar == '"') {
+                if (isSpaded(bet)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+ 
+    boolean isSpaded(Hand hand) {
+        for (Card card : hand.getCards()) {
+            if (card.getSuit() != Suit.SPADES) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    boolean isSuited(Hand hand) {
+        Suit suit = hand.getCards().get(0).getSuit();
+        for (Card card : hand.getCards()) {
+            if (card.getSuit() != suit) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    int getDigit(String string) {
+        if (string.contains("4")) {
+            return 4;
+        } else if (string.contains("5")) {
+            return 5;
+        } else if (string.contains("6")) {
+            return 6;
+        }
+        return Integer.MAX_VALUE;
+    }
+            
+    char getSpecialChar(String string) {
+        if (string.contains("*")) {
+            return '*';
+        } else if (string.contains("'")) {
+            return '\'';
+        } else if (string.contains("\"")) {
+            return '"';
+        }
+        return 0;
+    }
 
     enum StrategyTable {
         H17HARD, H17SOFT, H17PAIR,
@@ -167,95 +284,4 @@ class Strategy {
     //     upCard = card;
     // }
 
-    // Action chooseAction() {
-    //     String action =
-    //         actionMatrixLookup(rules, hasDoubled, value, hasAce, twins);
-    //     char actionChar = action.getCharAt(0);
-    //     int digit = getDigits(action);
-    //     char specialChar = getSpecialChar(action);
-
-    //     if (hand.size() >= digit) {return Action.HIT;}
-
-    //     if (string.equals("P$") && suitedSevens(hand)) {return Action.HIT;}
-
-    //     if (possible678(hand, specialChar)) {return Action.HIT;}
-
-    //     switch (actionChar) {
-    //     case 'H': return Action.HIT;
-    //     case 'S': return Action.STAND;
-    //     case 'P': return Action.SPLIT;
-    //     case 'D': return Action.DOUBLE;
-    //     case 'R': return Action.SURRENDER;
-    //     }
-    // }
-
-    // boolean suitedSevens(Hand hand) {
-    //     for (Card card : hand.getCards()) {
-    //         if (card.rank != Rank.SEVEN) {
-    //             return false;
-    //         }
-    //     }
-    //     return true;
-    // }
-
-    // boolean possible678(Hand hand, char specialChar) {
-    //     ArrayList sixSevenEight = ArrayList.toList(6, 7, 8);
-    //     boolean bool = sixSevenEight.containsAll(hand);
-    //     if (bool == true) {
-    //         if (specialChar == '*') {
-    //             return true;
-    //         } else if (specialChar == '\'') {
-    //             if (isSuited(hand) || isSpaded(hand)) {
-    //                 return true;
-    //             } else {
-    //                 return false;
-    //             }
-    //         } else if (specialChar == '"') {
-    //             if (spaded(hand)) {
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
-
-    // boolean isSpaded() {
-    //     for (Card card : hand) {
-    //         if (card.suit != Suit.SPADES) {
-    //             return false;
-    //         }
-    //     }
-    //     return true;
-    // }
-
-    // boolean isSuited() {
-    //     Suit suit = hand.get(0);
-    //     for (Card card : hand) {
-    //         if (card.suit != suit) {
-    //             return false;
-    //         }
-    //     }
-    //     return true;
-    // }
-
-    // int getDigit(String string) {
-    //     if (string.contains("4")) {
-    //         return 4;
-    //     } else if (string.contains("5")) {
-    //         return 5;
-    //     } else if (string.contains("6")) {
-    //         return 6;
-    //     }
-    //     return Integer.MAX_VALUE;
-    // }
-            
-    // char getSpecialChar(String string) {
-    //     if (string.contains("*")) {
-    //         return '*';
-    //     } else if (string.contains("'")) {
-    //         return '\'';
-    //     } else if (string.contains("\"")) {
-    //         return '"';
-    //     }
-    // }
 }

@@ -13,6 +13,13 @@ dependencies {
   // testCompile 'com.pholser:junit-quickcheck-core:0.7'
 }
 
+allprojects {
+  gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xmaxerrs" << "1"
+    }
+  }
+}
 
 // tasks.withType(JavaCompile) {
 //   options.compilerArgs << "--stacktrace"

@@ -2,6 +2,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class TestBlackjack {
+
+    @Test
     public void testBlackjack() {
         for (Suit suit1 : Suit.values()) {
             for (Rank rank1 : Rank.values()) {

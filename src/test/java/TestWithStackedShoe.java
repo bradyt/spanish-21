@@ -5,18 +5,18 @@ public class TestWithStackedShoe {
         Shoe shoe;
 
         shoe = new Shoe(0);
-        shoe.addCard("clubs", "ace");
-        shoe.addCard("clubs", "ace");
-        shoe.addCard("clubs", "jack");
-        shoe.addCard("clubs", "nine");
+        shoe.addCardByString("clubs", "ace");
+        shoe.addCardByString("clubs", "ace");
+        shoe.addCardByString("clubs", "jack");
+        shoe.addCardByString("clubs", "nine");
 
         testCase(shoe, (float)107.5);
 
         shoe = new Shoe(0);
-        shoe.addCard("clubs", "ace");
-        shoe.addCard("clubs", "ace");
-        shoe.addCard("clubs", "nine");
-        shoe.addCard("clubs", "jack");
+        shoe.addCardByString("clubs", "ace");
+        shoe.addCardByString("clubs", "ace");
+        shoe.addCardByString("clubs", "nine");
+        shoe.addCardByString("clubs", "jack");
 
         testCase(shoe, (float)95.0);
     }

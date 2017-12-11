@@ -2,6 +2,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestIsPair {
+    @Test
     public void testIsPair() {
         for (Suit suit1 : Suit.values()) {
             for (Suit suit2 : Suit.values()) {

@@ -31,11 +31,23 @@ class Hand {
     }
 
     boolean isSoft() {
-        return false;
+        int aces = 0;
+        int ptTot = 0;
+        for (Card card : hand) {
+            if (card.getRank() == Rank.ACE) {
+                aces++;
+            }
+            ptTot = ptTot + card.getPoint();
+        }
+        while (ptTot > 21 && aces > 0) {
+            ptTot -= 10;
+            aces--;
+        }
+        return (aces == 1);
     }
 
     boolean isSoft17() {
-        return false;
+        return (isSoft() && getPointTotal() == 17);
     }
 
     String getLookupFormat() {
@@ -70,6 +82,12 @@ class Hand {
             }
         }
         return false;
+    }
+
+    void addCardByString(String suit, String rank) {
+        Suit s = Suit.valueOf(suit.toUpperCase());
+        Rank r = Rank.valueOf(rank.toUpperCase());
+        hand.add(new Card(s, r));
     }
 
     public String toString() {

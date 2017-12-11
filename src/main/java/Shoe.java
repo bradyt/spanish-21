@@ -17,7 +17,7 @@ class Shoe {
         }
     }
 
-    void addCard(String suit, String rank) {
+    void addCardByString(String suit, String rank) {
         Suit s = Suit.valueOf(suit.toUpperCase());
         Rank r = Rank.valueOf(rank.toUpperCase());
         shoe.add(new Card(s, r));
