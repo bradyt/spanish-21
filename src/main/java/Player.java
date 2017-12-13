@@ -3,46 +3,76 @@ import java.util.ArrayList;
 class Player {
 
     private float money;
-    private ArrayList<Bet> stoodBets;
-    private ArrayList<Bet> actionableBets;
+    private Bet currentBet;
+    private ArrayList<Bet> bets;
+    // private ArrayList<Bet> stoodBets;
+    // private ArrayList<Bet> actionableBets;
     private int numOfSplits;
 
     Player(float money) {
         this.money = money;
-        stoodBets = new ArrayList<Bet>();
-        actionableBets = new ArrayList<Bet>();
+        bets = new ArrayList<Bet>();
+        // stoodBets = new ArrayList<Bet>();
+        // actionableBets = new ArrayList<Bet>();
     }
 
+    // Bet getCurrentBet() {
+    //     return currentBet;
+    // }
+       
     float getMoney() {
         return money;
     }
 
     void addBet(float bet) {
-        actionableBets.add(new Bet(bet));
+        bets.add(new Bet(bet));
+        // actionableBets.add(new Bet(bet));
+    }
+
+    void hit(Card card) {
+    }
+
+    void stand() {
+    }
+
+    void doubleDown(Card card) {
+    }
+
+    void surrender() {
+    }
+
+    void split() {
     }
 
     boolean hasActionableBets() {
-        return !actionableBets.isEmpty();
+        for (Bet bet : bets) {
+            if (bet.getState() == Bet.State.ACTIONABLE) {
+                currentBet = bet;
+                return true;
+            }
+        }
+        return false;
+        // return !actionableBets.isEmpty();
     }
 
     void addCard(Card card) {
-        actionableBets.get(0).addCard(card);
+        currentBet.addCard(card);
     }
 
     int getPointTotal() {
-        return actionableBets.get(0).getPointTotal();
+        return currentBet.getPointTotal();
     }
 
     void increaseMoneyByBet(float payout) {
         System.out.println(payout);
-        float delta = payout * actionableBets.get(0).getBetAmount();
+        float delta = payout * currentBet.getBetAmount();
         System.out.println(delta);
         money += delta;
     }
 
-    void popBet() {
-        actionableBets.remove(0);
-    }
+    // void popBet() {
+    //     actionableBets.remove(0);
+    // }
 
     void printMoney() {
         System.out.println(money);

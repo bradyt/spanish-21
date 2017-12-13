@@ -13,6 +13,10 @@ class Bet extends Hand {
         return bet;
     }
 
+    boolean hasDoubled() {
+        return numOfDoublings > 0;
+    }
+
     int getNumOfDoublings() {
         return numOfDoublings;
     }

@@ -3,47 +3,83 @@ import java.util.ArrayList;
 
 class Hand {
 
+    enum State {
+        ACTIONABLE,
+        STAND,
+        SURRENDERED,
+        BLACKJACK,
+        BUSTED;
+    }
+
     private ArrayList<Card> hand;
-    private boolean soft;
+    private int pointTotal = 0;
+    private int elevens = 0;
+    private State state = State.ACTIONABLE;
 
     Hand () {
         hand = new ArrayList<Card>();
     }
 
+    State getState() {
+        return state;
+    }
+
     void addCard(Card card) {
         hand.add(card);
+        pointTotal += card.getPoint();
+        if (card.getRank() == Rank.ACE) {elevens++;}
+        if (pointTotal > 21 && elevens > 0) {
+            pointTotal -= 10;
+            elevens--;
+        }
+        if (pointTotal > 21) {
+            state = State.BUSTED;
+        }
+    }
+
+    void addCard(Suit suit, Rank rank) {
+        addCard(new Card(suit, rank));
+    }
+
+    void addCard(String suit, String rank) {
+        Suit s = Suit.valueOf(suit.toUpperCase());
+        Rank r = Rank.valueOf(rank.toUpperCase());
+        addCard(s, r);
     }
 
     int getPointTotal() {
-        int aces = 0;
-        int ptTot = 0;
-        for (Card card : hand) {
-            if (card.equals(Rank.ACE)) {
-                aces++;
-            }
-            ptTot = ptTot + card.getPoint();
-        }
-        while (ptTot > 21 && aces > 0) {
-            ptTot -= 10;
-            aces--;
-        }
-        return ptTot;
+        return pointTotal;
     }
 
     boolean isSoft() {
-        int aces = 0;
-        int ptTot = 0;
-        for (Card card : hand) {
-            if (card.getRank() == Rank.ACE) {
-                aces++;
+        return elevens > 0;
+    }
+
+    int getNumOfCards() {
+        return hand.size();
+    }
+
+    ArrayList<Card> getCards() {
+        return hand;
+    }
+
+    boolean isSpaded() {
+        for (Card card : getCards()) {
+            if (card.getSuit() != Suit.SPADES) {
+                return false;
             }
-            ptTot = ptTot + card.getPoint();
         }
-        while (ptTot > 21 && aces > 0) {
-            ptTot -= 10;
-            aces--;
+        return true;
+    }
+
+    boolean isSuited() {
+        Suit suit = getCards().get(0).getSuit();
+        for (Card card : getCards()) {
+            if (card.getSuit() != suit) {
+                return false;
+            }
         }
-        return (aces == 1);
+        return true;
     }
 
     boolean isSoft17() {
@@ -60,8 +96,20 @@ class Hand {
         }
     }
 
-    ArrayList<Card> getCards() {
-        return hand;
+    boolean has678() {
+        return false;
+    }
+
+    boolean has777() {
+        if (hand.size() == 3) {
+            for (Card card : hand) {
+                if (!(card.getPoint() == 7)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     boolean isBlackjack() {
@@ -82,12 +130,6 @@ class Hand {
             }
         }
         return false;
-    }
-
-    void addCardByString(String suit, String rank) {
-        Suit s = Suit.valueOf(suit.toUpperCase());
-        Rank r = Rank.valueOf(rank.toUpperCase());
-        hand.add(new Card(s, r));
     }
 
     public String toString() {

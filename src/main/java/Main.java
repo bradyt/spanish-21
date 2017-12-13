@@ -22,6 +22,16 @@ class Main {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
+        System.out.print("The average money delta is: ");
+        System.out.println(Simulation.runSimulation(100, Rules.H17, new Shoe(5)));
+
+        // Strategy strategy = new Strategy(Rules.H17);
+        // Bet bet = new Bet(0);
+        // bet.addCard("clubs", "ace");
+        // bet.addCard("clubs", "two");
+
+        // System.out.println(bet.isSoft());
+        // System.out.println(strategy.pickTable(bet));
         // Strategy strategy = new Strategy(Rules.H17REDOUBLE);
         // Bet bet = new Bet(5);
         // bet.addCard(new Card(Suit.CLUBS, Rank.NINE));

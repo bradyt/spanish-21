@@ -8,8 +8,8 @@ public class TestStrategy {
     public void testPickTable1() {
         Strategy strategy = new Strategy(Rules.H17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "two");
-        bet.addCardByString("clubs", "two");
+        bet.addCard("clubs", "two");
+        bet.addCard("clubs", "two");
         assert(strategy.pickTable(bet) ==
                Strategy.StrategyTable.H17PAIR);
     }
@@ -18,8 +18,8 @@ public class TestStrategy {
     public void testPickTable2() {
         Strategy strategy = new Strategy(Rules.H17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "ace");
-        bet.addCardByString("clubs", "two");
+        bet.addCard("clubs", "ace");
+        bet.addCard("clubs", "two");
         assert(strategy.pickTable(bet) ==
                Strategy.StrategyTable.H17SOFT);
     }
@@ -28,8 +28,8 @@ public class TestStrategy {
     public void testPickTable3() {
         Strategy strategy = new Strategy(Rules.H17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "two");
-        bet.addCardByString("clubs", "three");
+        bet.addCard("clubs", "two");
+        bet.addCard("clubs", "three");
         assert(strategy.pickTable(bet) ==
                Strategy.StrategyTable.H17HARD);
     }
@@ -38,8 +38,8 @@ public class TestStrategy {
     public void testPickTable4() {
         Strategy strategy = new Strategy(Rules.S17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "two");
-        bet.addCardByString("clubs", "two");
+        bet.addCard("clubs", "two");
+        bet.addCard("clubs", "two");
         assert(strategy.pickTable(bet) ==
                Strategy.StrategyTable.S17PAIR);
     }
@@ -48,8 +48,8 @@ public class TestStrategy {
     public void testPickTable5() {
         Strategy strategy = new Strategy(Rules.S17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "ace");
-        bet.addCardByString("clubs", "two");
+        bet.addCard("clubs", "ace");
+        bet.addCard("clubs", "two");
         assert(strategy.pickTable(bet) ==
                Strategy.StrategyTable.S17SOFT);
     }
@@ -58,8 +58,8 @@ public class TestStrategy {
     public void testPickTable6() {
         Strategy strategy = new Strategy(Rules.S17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "two");
-        bet.addCardByString("clubs", "three");
+        bet.addCard("clubs", "two");
+        bet.addCard("clubs", "three");
         assert(strategy.pickTable(bet) ==
                Strategy.StrategyTable.S17HARD);
     }
@@ -68,8 +68,8 @@ public class TestStrategy {
     public void testPickTable7() {
         Strategy strategy = new Strategy(Rules.H17REDOUBLE);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "two");
-        bet.addCardByString("clubs", "two");
+        bet.addCard("clubs", "two");
+        bet.addCard("clubs", "two");
         assert(strategy.pickTable(bet) ==
                Strategy.StrategyTable.H17DOUBLEDNOTYET);
     }
@@ -78,8 +78,8 @@ public class TestStrategy {
     public void testPickTable8() {
         Strategy strategy = new Strategy(Rules.H17REDOUBLE);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "ace");
-        bet.addCardByString("clubs", "two");
+        bet.addCard("clubs", "ace");
+        bet.addCard("clubs", "two");
         bet.incrementNumOfDoublings();
         assert(strategy.pickTable(bet) ==
                Strategy.StrategyTable.H17DOUBLEDSOFT);
@@ -89,8 +89,8 @@ public class TestStrategy {
     public void testPickTable9() {
         Strategy strategy = new Strategy(Rules.H17REDOUBLE);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "two");
-        bet.addCardByString("clubs", "three");
+        bet.addCard("clubs", "two");
+        bet.addCard("clubs", "three");
         bet.incrementNumOfDoublings();
         assert(strategy.pickTable(bet) ==
                Strategy.StrategyTable.H17DOUBLEDHARD);
@@ -111,8 +111,8 @@ public class TestStrategy {
     public void testStrategy1() {
         Strategy strategy = new Strategy(Rules.H17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "two");
-        bet.addCardByString("clubs", "two");
+        bet.addCard("clubs", "two");
+        bet.addCard("clubs", "two");
         assert(strategy.getCell(bet, 2).equals("p"));
     }
 
@@ -120,8 +120,8 @@ public class TestStrategy {
     public void testStrategy2() {
         Strategy strategy = new Strategy(Rules.H17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "nine");
-        bet.addCardByString("clubs", "nine");
+        bet.addCard("clubs", "nine");
+        bet.addCard("clubs", "nine");
         assert(strategy.getCell(bet, 5).equals("p"));
     }
 
@@ -129,8 +129,8 @@ public class TestStrategy {
     public void testStrategy3() {
         Strategy strategy = new Strategy(Rules.H17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "four");
-        bet.addCardByString("clubs", "four");
+        bet.addCard("clubs", "four");
+        bet.addCard("clubs", "four");
         assert(strategy.getCell(bet, 5).equals("h"));
     }
 
@@ -138,8 +138,8 @@ public class TestStrategy {
     public void testStrategy4() {
         Strategy strategy = new Strategy(Rules.H17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "seven");
-        bet.addCardByString("clubs", "seven");
+        bet.addCard("clubs", "seven");
+        bet.addCard("clubs", "seven");
         assert(strategy.getCell(bet, 7).equals("p$"));
     }
 
@@ -147,8 +147,8 @@ public class TestStrategy {
     public void testStrategy5() {
         Strategy strategy = new Strategy(Rules.H17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "seven");
-        bet.addCardByString("clubs", "seven");
+        bet.addCard("clubs", "seven");
+        bet.addCard("clubs", "seven");
         assert(strategy.isSuited(bet));
     }
 
@@ -156,8 +156,8 @@ public class TestStrategy {
     public void testStrategy6() {
         Strategy strategy = new Strategy(Rules.H17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "seven");
-        bet.addCardByString("clubs", "seven");
+        bet.addCard("clubs", "seven");
+        bet.addCard("clubs", "seven");
         assert(strategy.getAction(bet, 7, 0) == Action.HIT);
     }
 
@@ -165,8 +165,8 @@ public class TestStrategy {
     public void testStrategy7() {
         Strategy strategy = new Strategy(Rules.H17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "six");
-        bet.addCardByString("clubs", "seven");
+        bet.addCard("clubs", "six");
+        bet.addCard("clubs", "seven");
         assert(strategy.possible678(bet));
     }
 
@@ -174,8 +174,8 @@ public class TestStrategy {
     public void testStrategy8() {
         Strategy strategy = new Strategy(Rules.H17);
         Bet bet = new Bet(0);
-        bet.addCardByString("clubs", "six");
-        bet.addCardByString("clubs", "seven");
+        bet.addCard("clubs", "six");
+        bet.addCard("clubs", "seven");
         assert(strategy.getAction(bet, 6, 0) == Action.HIT);
     }
 }

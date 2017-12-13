@@ -1,10 +1,18 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class TestIsSoft {
+public class TestHand {
 
     @Test
-    public void testIsSoft() {
+    public void testHand2() {
+        Bet bet = new Bet(0);
+        bet.addCard("clubs", "ace");
+        bet.addCard("clubs", "two");
+        assert(bet.isSoft());
+    }
+
+    @Test
+    public void testHand() {
         Suit suit = Suit.CLUBS;
         Card ace = new Card(suit, Rank.ACE);
         Card two = new Card(suit, Rank.TWO);
@@ -12,6 +20,7 @@ public class TestIsSoft {
         Card jack = new Card(suit, Rank.JACK);
 
         checkSoft(true, ace, jack);
+        checkSoft(true, ace, two);
         checkSoft(false, ace, jack, two);
     }
 

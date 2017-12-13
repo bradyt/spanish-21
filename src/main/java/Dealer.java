@@ -34,13 +34,13 @@ class Dealer {
         if (player.getPointTotal() == 21) {
             System.out.println(player.getMoney());
             player.increaseMoneyByBet((float)1.5);
-            player.popBet();
+            // player.popBet();
             System.out.println("player has blackjack");
             System.out.println(player.getMoney());
         } else if (hand.getPointTotal() == 21) {
             System.out.println(player.getMoney());
             player.increaseMoneyByBet(-1);
-            player.popBet();
+            // player.popBet();
             System.out.println("dealer has blackjack");
             System.out.println(player.getMoney());
         }
