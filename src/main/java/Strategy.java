@@ -9,29 +9,21 @@ class Strategy {
         this.rules = rules;
     }
 
-    // Action getAction(Bet bet, int upcardPoint) {
-    // }
+    Action getAction(Hand dealer, Hand hand, boolean canSplit) {
 
-    /* this class, first uses rules and bet to determine correct table
-     * (or short circuits the table). once it has the correct table,
-     * we get the appropriate row, and the appropriate cell.
-     * at this point, we can work on the cell value to get the
-     * correct action
-     */
+        int upcardPoint = dealer.getUpcardPoint();
 
-    Action getAction(Bet bet, int upcardPoint, int numOfSplits) {
-
-        String action = getStrategyString(bet, upcardPoint);
+        String action = getStrategyString(hand, upcardPoint);
 
         char actionChar = action.toUpperCase().charAt(0);
         int digit = getDigit(action);
         char specialChar = getSpecialChar(action);
 
-        if (bet.getCards().size() >= digit) {return Action.HIT;}
-        if (possible678AgainstSpecialChar(bet, specialChar)) {
+        if (hand.getCards().size() >= digit) {return Action.HIT;}
+        if (possible678AgainstSpecialChar(hand, specialChar)) {
             return Action.HIT;
         }
-        if (action.equals("p$") && isSuited(bet)) {return Action.HIT;}
+        if (action.equals("p$") && isSuited(hand)) {return Action.HIT;}
 
         switch (actionChar) {
         case 'H': return Action.HIT;
@@ -43,18 +35,9 @@ class Strategy {
         return Action.HIT;
     }
 
-    // boolean suitedSevens(Hand hand) {
-    //     for (Card card : hand.getCards()) {
-    //         if (card.getRank() != Rank.SEVEN) {
-    //             return false;
-    //         }
-    //     }
-    //     return isSuited(hand);
-    // }
-
-    boolean possible678(Bet bet) {
-        int pt0 = bet.getCards().get(0).getPoint();
-        int pt1 = bet.getCards().get(1).getPoint();
+    boolean possible678(Hand hand) {
+        int pt0 = hand.getCards().get(0).getPoint();
+        int pt1 = hand.getCards().get(1).getPoint();
         if (pt0 == 6 && pt1 == 7 || pt1 == 8) {
             return true;
         }
@@ -67,20 +50,20 @@ class Strategy {
         return false;
     }
  
-    boolean possible678AgainstSpecialChar(Bet bet, char specialChar) {
+    boolean possible678AgainstSpecialChar(Hand hand, char specialChar) {
         List<Integer> sixSevenEight = Arrays.asList(6, 7, 8);
-        boolean bool = possible678(bet);
+        boolean bool = possible678(hand);
         if (bool == true) {
             if (specialChar == '*') {
                 return true;
             } else if (specialChar == '\'') {
-                if (isSuited(bet) || isSpaded(bet)) {
+                if (isSuited(hand) || isSpaded(hand)) {
                     return true;
                 } else {
                     return false;
                 }
             } else if (specialChar == '"') {
-                if (isSpaded(bet)) {
+                if (isSpaded(hand)) {
                     return true;
                 }
             }
@@ -137,16 +120,24 @@ class Strategy {
         H17DOUBLEDSOFT;
     }
 
-    String getCell(Bet bet, int upCardPoint) {
-        ArrayList<String> row = getRow(bet);
+    String getCell(Hand hand, int upCardPoint) {
+
+        // System.out.println(hand);
+        // System.out.println(upCardPoint);
+
+        ArrayList<String> row = getRow(hand);
+
+        // System.out.println(row);
+
         return row.get(upCardPoint - 1);
+
     }
 
-    ArrayList<String> getRow(Bet bet) {
-        StrategyTable strategyTable = pickTable(bet);
+    ArrayList<String> getRow(Hand hand) {
+        StrategyTable strategyTable = pickTable(hand);
         ArrayList<ArrayList<String>> table = getTable(strategyTable);
-        String form = bet.getLookupFormat();
-        String ptTot = Integer.toString(bet.getPointTotal());
+        String form = hand.getLookupFormat();
+        String ptTot = Integer.toString(hand.getPointTotal());
         if (strategyTable == StrategyTable.H17PAIR || strategyTable == StrategyTable.S17PAIR) {
             for (ArrayList<String> row : table) {
                 if (row.get(0).equals(form)) {
@@ -179,10 +170,10 @@ class Strategy {
         return new ArrayList<String>();
     }
 
-    StrategyTable pickTable(Bet bet) {
-        boolean pair = (bet.isPair() && !bet.containsOneOfFollowingPoints(4, 5, 10));
-        boolean soft = bet.isSoft();
-        boolean doubled = bet.getNumOfDoublings() > 0;
+    StrategyTable pickTable(Hand hand) {
+        boolean pair = (hand.isPair() && !hand.containsOneOfFollowingPoints(4, 5, 10));
+        boolean soft = hand.isSoft();
+        boolean doubled = hand.getNumOfDoublings() > 0;
         
         if (rules == Rules.H17) {
             if (pair) {
@@ -230,9 +221,9 @@ class Strategy {
         }
     }
 
-    String getStrategyString(Bet bet, int upCardPoint) {
-        int ptTot = bet.getPointTotal();
-        boolean doubled = bet.getNumOfDoublings() > 0;
+    String getStrategyString(Hand hand, int upCardPoint) {
+        int ptTot = hand.getPointTotal();
+        boolean doubled = hand.getNumOfDoublings() > 0;
 
         if (doubled) {
             if (ptTot >= 12 && ptTot <= 18) {
@@ -244,44 +235,7 @@ class Strategy {
             }
         }
 
-        return getCell(bet, upCardPoint);
-        // StrategyTable strategyTable = pickTable(isPair, hand.isSoft, doubled);
-        // if (!rules.equals(H17REDOUBLE)) {
-        //     if (treatAsPairs) {
-        //         // use pairs table
-        //     } else if (hand.isSoft()) {
-        //         // use soft table
-        //     } else {
-        //         // use hard table
-        //     }
-        // } else {
-        //     if (!hasDoubled) {
-        //         if (treatAsPairs) {
-        //             // use the pair
-        //         } else if (hand.hasAnAce()) {
-        //             // look up with ace
-        //         } else {
-        //             // look up as point total
-        //         }
-        //     } else if (!hand.isSoft()) {
-        //         // use hard table
-        //     } else {
-        //         // use soft table
-        //     }
-        // }
+        return getCell(hand, upCardPoint);
     }
-
-    // Rules rules;
-    // Card upCard;
-    // Hand hand;
-    // boolean hasDoubled;
-
-    // Strategy(Rules rules) {
-    //     this.rules = rules;
-    // }
-
-    // void setUpcard(Card card) {
-    //     upCard = card;
-    // }
 
 }

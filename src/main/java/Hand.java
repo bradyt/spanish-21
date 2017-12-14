@@ -8,16 +8,85 @@ class Hand {
         STAND,
         SURRENDERED,
         BLACKJACK,
+        LOSTTODEALERBLACKJACK,
         BUSTED;
     }
 
     private ArrayList<Card> hand;
     private int pointTotal = 0;
     private int elevens = 0;
-    private State state = State.ACTIONABLE;
+    private State state;
+    private float bet;
+    private int numOfDoublings;
 
     Hand () {
         hand = new ArrayList<Card>();
+        state = State.ACTIONABLE;
+    }
+
+    Hand (float bet) {
+        hand = new ArrayList<Card>();
+        this.bet = bet;
+        numOfDoublings = 0;
+        state = State.ACTIONABLE;
+    }
+
+    boolean isActionable() {
+        return state == State.ACTIONABLE;
+    }
+
+    int getUpcardPoint() {
+        return hand.get(0).getPoint();
+    }
+
+    void applyAction(Action action, Shoe shoe, Hands hands) {
+        switch (action) {
+        case STAND:
+            state = State.STAND;
+            break;
+        case SURRENDER:
+            state = State.SURRENDERED;
+            break;
+        case HIT:
+            addCard(shoe.dealCard());
+            break;
+        case DOUBLE:
+            addCard(shoe.dealCard());
+            bet *= 2;
+            numOfDoublings++;
+            break;
+        case SPLIT:
+            Hand splitHand = new Hand(bet);
+            splitHand.addCard(removeCard());
+            addCard(shoe.dealCard());
+            splitHand.addCard(shoe.dealCard());
+            hands.addHand(splitHand);
+            break;
+        }
+    }
+
+    Card removeCard() {
+        return hand.remove(0);
+    }
+
+    void lostToDealerBlackjack() {
+        state = State.LOSTTODEALERBLACKJACK;
+    }
+
+    float getBet() {
+        return bet;
+    }
+
+    boolean hasDoubled() {
+        return numOfDoublings > 0;
+    }
+
+    int getNumOfDoublings() {
+        return numOfDoublings;
+    }
+
+    void incrementNumOfDoublings() {
+        numOfDoublings++;
     }
 
     State getState() {
@@ -31,6 +100,9 @@ class Hand {
         if (pointTotal > 21 && elevens > 0) {
             pointTotal -= 10;
             elevens--;
+        }
+        if (pointTotal == 21 && hand.size() == 2) {
+            state = State.BLACKJACK;
         }
         if (pointTotal > 21) {
             state = State.BUSTED;
@@ -113,7 +185,7 @@ class Hand {
     }
 
     boolean isBlackjack() {
-        return (hand.size() == 2 && getPointTotal() == 21);
+        return (hand.size() == 2 && pointTotal == 21);
     }
 
     boolean isPair() {

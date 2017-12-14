@@ -4,9 +4,15 @@ import java.util.Collections;
 
 class Shoe {
 
+    private int numOfDecks;
     private List<Card> shoe;
 
     Shoe(int numOfDecks) {
+        this.numOfDecks = numOfDecks;
+        makeDeck();
+    }
+
+    void makeDeck() {
         shoe = new ArrayList<Card>();
         for (int i = 0; i < numOfDecks; i++) {
             for (Suit suit : Suit.values()) {
@@ -16,6 +22,7 @@ class Shoe {
             }
         }
     }
+
 
     void addCardByString(String suit, String rank) {
         Suit s = Suit.valueOf(suit.toUpperCase());
@@ -28,6 +35,9 @@ class Shoe {
     }
 
     Card dealCard() {
+        if (shoe.isEmpty()) {
+            makeDeck();
+        }
         return shoe.remove(0);
     }
 
