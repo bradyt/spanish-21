@@ -18,6 +18,7 @@ class Hand {
     private State state;
     private float bet;
     private int numOfDoublings;
+    private int numOfCards;
 
     Hand () {
         hand = new ArrayList<Card>();
@@ -60,12 +61,13 @@ class Hand {
             splitHand.addCard(removeCard());
             addCard(shoe.dealCard());
             splitHand.addCard(shoe.dealCard());
-            hands.addHand(splitHand);
+            hands.addSplitHand(splitHand);
             break;
         }
     }
 
     Card removeCard() {
+        numOfCards--;
         return hand.remove(0);
     }
 
@@ -95,6 +97,7 @@ class Hand {
 
     void addCard(Card card) {
         hand.add(card);
+        numOfCards++;
         pointTotal += card.getPoint();
         if (card.getRank() == Rank.ACE) {elevens++;}
         if (pointTotal > 21 && elevens > 0) {
@@ -128,6 +131,7 @@ class Hand {
     }
 
     int getNumOfCards() {
+        // return numOfCards;
         return hand.size();
     }
 

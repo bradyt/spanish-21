@@ -4,13 +4,28 @@ import java.util.ArrayList;
 class Hands {
 
     private ArrayList<Hand> hands;
+    private int numOfSplits;
 
     Hands() {
         hands = new ArrayList<Hand>();
+        numOfSplits = 0;
     }
 
-    void addHand(Hand hand) {
+    boolean hasSplit() {
+        return numOfSplits > 0;
+    }
+
+    boolean canSplit() {
+        return numOfSplits < 3;
+    }
+
+    void addFirstHand(Hand hand) {
         hands.add(hand);
+    }
+
+    void addSplitHand(Hand hand) {
+        hands.add(hand);
+        numOfSplits++;
     }
 
     List<Hand> getHands() {

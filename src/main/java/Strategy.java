@@ -4,14 +4,14 @@ import org.apache.commons.csv.*;
 
 class Strategy {
     private Rules rules;
+    private Map<StrategyTable, ArrayList<ArrayList<String>>> tableMap;
 
     Strategy(Rules rules) {
         this.rules = rules;
+        tableMap = cacheTables();
     }
 
-    Action getAction(Hand dealer, Hand hand, boolean canSplit) {
-
-        int upcardPoint = dealer.getUpcardPoint();
+    Action getAction(int upcardPoint, Hand hand, boolean canSplit) {
 
         String action = getStrategyString(hand, upcardPoint);
 
@@ -135,7 +135,7 @@ class Strategy {
 
     ArrayList<String> getRow(Hand hand) {
         StrategyTable strategyTable = pickTable(hand);
-        ArrayList<ArrayList<String>> table = getTable(strategyTable);
+        ArrayList<ArrayList<String>> table = getCachedTable(strategyTable);
         String form = hand.getLookupFormat();
         String ptTot = Integer.toString(hand.getPointTotal());
         if (strategyTable == StrategyTable.H17PAIR || strategyTable == StrategyTable.S17PAIR) {
@@ -200,6 +200,18 @@ class Strategy {
         } else {
             return StrategyTable.H17DOUBLEDNOTYET;
         }
+    }
+
+    ArrayList<ArrayList<String>> getCachedTable(StrategyTable strategyTable) {
+        return tableMap.get(strategyTable);
+    }
+
+    Map<StrategyTable, ArrayList<ArrayList<String>>> cacheTables() {
+        tableMap = new HashMap<StrategyTable, ArrayList<ArrayList<String>>>();
+        for (StrategyTable strategyTable : StrategyTable.values()) {
+            tableMap.put(strategyTable, getTable(strategyTable));
+        }
+        return tableMap;
     }
 
     ArrayList<ArrayList<String>> getTable(StrategyTable strategyTable) {

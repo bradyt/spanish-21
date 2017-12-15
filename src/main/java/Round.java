@@ -4,10 +4,7 @@ class Round {
 
         Hand player = new Hand(bet);
         Hand dealer = new Hand();
-        int numOfSplits = 0;
         float deltaMoney = 0;
-        boolean canSplit = true;
-        boolean hasSplit;
 
         deal(shoe, dealer, player);
 
@@ -18,25 +15,23 @@ class Round {
         }
 
         Hands hands = new Hands();
-        hands.addHand(player);
+        hands.addFirstHand(player);
 
         int upcardPoint = dealer.getUpcardPoint();
 
         Hand currentHand = new Hand();
         while (hands.hasActionableHand()) {
             currentHand = hands.getActionableHand();
-            Action action =
-                strategy.getAction(dealer, currentHand, numOfSplits < 3);
-            if (action == Action.SPLIT) {numOfSplits++;}
-            // TODO: check that applyAction is doing the right thing
+            Action action = strategy.getAction(upcardPoint, currentHand, hands.canSplit());
             currentHand.applyAction(action, shoe, hands);
         }
 
-        hasSplit = numOfSplits > 0;
-
+        int dealersPointTotal = dealer.getPointTotal();
         for (Hand hand : hands.getHands()) {
-            // TODO: write tests
-            deltaMoney += Payout.calculatePayout(dealer, hand, hasSplit);
+            deltaMoney += Payout.calculatePayout(upcardPoint,
+                                                 dealersPointTotal,
+                                                 hand,
+                                                 hands.hasSplit());
         }
 
         return deltaMoney;

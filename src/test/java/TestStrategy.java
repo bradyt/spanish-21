@@ -158,10 +158,7 @@ public class TestStrategy {
         Hand hand = new Hand(0);
         hand.addCard("clubs", "seven");
         hand.addCard("clubs", "seven");
-        Hand dealer = new Hand();
-        dealer.addCard("clubs", "seven");
-        dealer.addCard("clubs", "seven");
-        assert(strategy.getAction(hand, dealer, true) == Action.HIT);
+        assert(strategy.getAction(7, hand, true) == Action.HIT);
     }
 
     @Test
@@ -179,10 +176,7 @@ public class TestStrategy {
         Hand hand = new Hand(0);
         hand.addCard("clubs", "six");
         hand.addCard("clubs", "seven");
-        Hand dealer = new Hand();
-        dealer.addCard("clubs", "six");
-        dealer.addCard("clubs", "six");
-        assert(strategy.getAction(hand, dealer, true) == Action.SPLIT);
+        assert(strategy.getAction(6, hand, true) == Action.HIT);
     }
 
     @Test
@@ -191,9 +185,6 @@ public class TestStrategy {
         Hand hand = new Hand(0);
         hand.addCard("hearts", "nine");
         hand.addCard("hearts", "ace");
-        Hand dealer = new Hand();
-        dealer.addCard("clubs", "six");
-        dealer.addCard("clubs", "six");
-        assert(strategy.getAction(hand, dealer, true) == Action.STAND);
+        assert(strategy.getAction(6, hand, true) == Action.STAND);
     }
 }

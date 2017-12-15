@@ -1,3 +1,5 @@
+// -*- groovy -*-
+
 apply plugin: 'java'
 apply plugin: 'application'
 
@@ -6,6 +8,18 @@ mainClassName = 'Main'
 repositories {
   mavenCentral()
 }
+
+// run {
+//   args = [
+//     "-XX:+UnlockCommercialFeatures",
+//     "-XX:+FlightRecorder",
+//     // "options.compilerArgs << \"-Xrunhprof\"",
+//     // "-agentlib:hprof",
+//   ]
+// }
+// plugins {
+//   id "io.github.lhotari.jfr" version "0.2"
+// }
 
 dependencies {
   compile 'org.apache.commons:commons-csv:1.5'
@@ -16,11 +30,23 @@ dependencies {
 allprojects {
   gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xmaxerrs" << "1"
+        // options.compilerArgs << "-Xmaxerrs" << "1"
     }
   }
 }
 
+// compileJava {options.compilerArgs += ["-J-agentlib:hprof=heap=sites",
+//     // "-Xrunhprof",
+//   ]
+// }
+
 // tasks.withType(JavaCompile) {
 //   options.compilerArgs << "--stacktrace"
 // }
+
+javadoc {
+    source = sourceSets.main.allJava
+    options.addStringOption "package", "src/main/java/Main.java"
+    // options.addStringOption "private", "src/main/java/Main.java"
+    // options.addStringOption "umlIncludePrivateFields", "true"
+}
