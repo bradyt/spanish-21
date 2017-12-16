@@ -4,187 +4,220 @@ import org.junit.Test;
 
 public class TestStrategy {
 
-    @Test
-    public void testPickTable1() {
-        Strategy strategy = new Strategy(Rules.H17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "two");
-        hand.addCard("clubs", "two");
-        assert(strategy.pickTable(hand) ==
-               Strategy.StrategyTable.H17PAIR);
-    }
-
-    @Test
-    public void testPickTable2() {
-        Strategy strategy = new Strategy(Rules.H17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "ace");
-        hand.addCard("clubs", "two");
-        assert(strategy.pickTable(hand) ==
-               Strategy.StrategyTable.H17SOFT);
-    }
-
-    @Test
-    public void testPickTable3() {
-        Strategy strategy = new Strategy(Rules.H17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "two");
-        hand.addCard("clubs", "three");
-        assert(strategy.pickTable(hand) ==
-               Strategy.StrategyTable.H17HARD);
-    }
-
-    @Test
-    public void testPickTable4() {
-        Strategy strategy = new Strategy(Rules.S17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "two");
-        hand.addCard("clubs", "two");
-        assert(strategy.pickTable(hand) ==
-               Strategy.StrategyTable.S17PAIR);
-    }
-
-    @Test
-    public void testPickTable5() {
-        Strategy strategy = new Strategy(Rules.S17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "ace");
-        hand.addCard("clubs", "two");
-        assert(strategy.pickTable(hand) ==
-               Strategy.StrategyTable.S17SOFT);
-    }
-
-    @Test
-    public void testPickTable6() {
-        Strategy strategy = new Strategy(Rules.S17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "two");
-        hand.addCard("clubs", "three");
-        assert(strategy.pickTable(hand) ==
-               Strategy.StrategyTable.S17HARD);
-    }
-
-    @Test
-    public void testPickTable7() {
-        Strategy strategy = new Strategy(Rules.H17REDOUBLE);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "two");
-        hand.addCard("clubs", "two");
-        assert(strategy.pickTable(hand) ==
-               Strategy.StrategyTable.H17DOUBLEDNOTYET);
-    }
-
-    @Test
-    public void testPickTable8() {
-        Strategy strategy = new Strategy(Rules.H17REDOUBLE);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "ace");
-        hand.addCard("clubs", "two");
-        hand.incrementNumOfDoublings();
-        assert(strategy.pickTable(hand) ==
-               Strategy.StrategyTable.H17DOUBLEDSOFT);
-    }
-
-    @Test
-    public void testPickTable9() {
-        Strategy strategy = new Strategy(Rules.H17REDOUBLE);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "two");
-        hand.addCard("clubs", "three");
-        hand.incrementNumOfDoublings();
-        assert(strategy.pickTable(hand) ==
-               Strategy.StrategyTable.H17DOUBLEDHARD);
-    }
-
-    public void skeleton(Rules rules, int upCardPoint, String lookupValue,
-                         Card... cards) {
+    public void skeleton(Rules rules,
+                         int upcard,
+                         Hand hand,
+                         boolean canSplit,
+                         Action action) {
         Strategy strategy = new Strategy(rules);
-        Hand hand = new Hand(0);
-        for (Card card : cards) {
-            hand.addCard(card);
-        }
-        String cell = strategy.getCell(hand, upCardPoint);
-        assertEquals(cell, lookupValue);
+        assertEquals(strategy.getAction(upcard, hand, canSplit),
+                     action);
     }
 
     @Test
-    public void testStrategy1() {
-        Strategy strategy = new Strategy(Rules.H17);
+    public void testGetAction1() {
         Hand hand = new Hand(0);
         hand.addCard("clubs", "two");
         hand.addCard("clubs", "two");
-        assert(strategy.getCell(hand, 2).equals("p"));
+        skeleton(Rules.S17, 2, hand, true, Action.SPLIT);
     }
 
     @Test
-    public void testStrategy2() {
-        Strategy strategy = new Strategy(Rules.H17);
+    public void testGetAction2() {
         Hand hand = new Hand(0);
-        hand.addCard("clubs", "nine");
-        hand.addCard("clubs", "nine");
-        assert(strategy.getCell(hand, 5).equals("p"));
+        hand.addCard("clubs", "two");
+        hand.addCard("clubs", "two");
+        hand.addCard("clubs", "two");
+        hand.incrementNumOfDoublings();
+        skeleton(Rules.H17REDOUBLE, 2, hand, true, Action.STAND);
     }
 
-    @Test
-    public void testStrategy3() {
-        Strategy strategy = new Strategy(Rules.H17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "four");
-        hand.addCard("clubs", "four");
-        assert(strategy.getCell(hand, 5).equals("h"));
-    }
+    // public void skeleton(Rules rules,
+    //                      Hand hand,
+    //                      boolean canSplit
 
-    @Test
-    public void testStrategy4() {
-        Strategy strategy = new Strategy(Rules.H17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "seven");
-        hand.addCard("clubs", "seven");
-        assert(strategy.getCell(hand, 7).equals("p$"));
-    }
+//     @Test
+//     public void testPickTable1() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "two");
+//         hand.addCard("clubs", "two");
+//         assert(strategy.pickTable(hand) ==
+//                Strategy.StrategyTable.H17PAIR);
+//     }
 
-    @Test
-    public void testStrategy5() {
-        Strategy strategy = new Strategy(Rules.H17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "seven");
-        hand.addCard("clubs", "seven");
-        assert(strategy.isSuited(hand));
-    }
+//     @Test
+//     public void testPickTable2() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "ace");
+//         hand.addCard("clubs", "two");
+//         assert(strategy.pickTable(hand) ==
+//                Strategy.StrategyTable.H17SOFT);
+//     }
 
-    @Test
-    public void testStrategy6() {
-        Strategy strategy = new Strategy(Rules.H17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "seven");
-        hand.addCard("clubs", "seven");
-        assert(strategy.getAction(7, hand, true) == Action.HIT);
-    }
+//     @Test
+//     public void testPickTable3() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "two");
+//         hand.addCard("clubs", "three");
+//         assert(strategy.pickTable(hand) ==
+//                Strategy.StrategyTable.H17HARD);
+//     }
 
-    @Test
-    public void testStrategy7() {
-        Strategy strategy = new Strategy(Rules.H17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "six");
-        hand.addCard("clubs", "seven");
-        assert(strategy.possible678(hand));
-    }
+//     @Test
+//     public void testPickTable4() {
+//         Strategy strategy = new Strategy(Rules.S17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "two");
+//         hand.addCard("clubs", "two");
+//         assert(strategy.pickTable(hand) ==
+//                Strategy.StrategyTable.S17PAIR);
+//     }
 
-    @Test
-    public void testStrategy8() {
-        Strategy strategy = new Strategy(Rules.H17);
-        Hand hand = new Hand(0);
-        hand.addCard("clubs", "six");
-        hand.addCard("clubs", "seven");
-        assert(strategy.getAction(6, hand, true) == Action.HIT);
-    }
+//     @Test
+//     public void testPickTable5() {
+//         Strategy strategy = new Strategy(Rules.S17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "ace");
+//         hand.addCard("clubs", "two");
+//         assert(strategy.pickTable(hand) ==
+//                Strategy.StrategyTable.S17SOFT);
+//     }
 
-    @Test
-    public void testStrategy9() {
-        Strategy strategy = new Strategy(Rules.H17);
-        Hand hand = new Hand(0);
-        hand.addCard("hearts", "nine");
-        hand.addCard("hearts", "ace");
-        assert(strategy.getAction(6, hand, true) == Action.STAND);
-    }
+//     @Test
+//     public void testPickTable6() {
+//         Strategy strategy = new Strategy(Rules.S17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "two");
+//         hand.addCard("clubs", "three");
+//         assert(strategy.pickTable(hand) ==
+//                Strategy.StrategyTable.S17HARD);
+//     }
+
+//     @Test
+//     public void testPickTable7() {
+//         Strategy strategy = new Strategy(Rules.H17REDOUBLE);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "two");
+//         hand.addCard("clubs", "two");
+//         assert(strategy.pickTable(hand) ==
+//                Strategy.StrategyTable.H17DOUBLEDNOTYET);
+//     }
+
+//     @Test
+//     public void testPickTable8() {
+//         Strategy strategy = new Strategy(Rules.H17REDOUBLE);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "ace");
+//         hand.addCard("clubs", "two");
+//         hand.incrementNumOfDoublings();
+//         assert(strategy.pickTable(hand) ==
+//                Strategy.StrategyTable.H17DOUBLEDSOFT);
+//     }
+
+//     @Test
+//     public void testPickTable9() {
+//         Strategy strategy = new Strategy(Rules.H17REDOUBLE);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "two");
+//         hand.addCard("clubs", "three");
+//         hand.incrementNumOfDoublings();
+//         assert(strategy.pickTable(hand) ==
+//                Strategy.StrategyTable.H17DOUBLEDHARD);
+//     }
+
+//     public void skeleton(Rules rules, int upCardPoint, String lookupValue,
+//                          Card... cards) {
+//         Strategy strategy = new Strategy(rules);
+//         Hand hand = new Hand(0);
+//         for (Card card : cards) {
+//             hand.addCard(card);
+//         }
+//         String cell = strategy.getCell(hand, upCardPoint);
+//         assertEquals(cell, lookupValue);
+//     }
+
+//     @Test
+//     public void testStrategy1() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "two");
+//         hand.addCard("clubs", "two");
+//         assert(strategy.getCell(hand, 2).equals("p"));
+//     }
+
+//     @Test
+//     public void testStrategy2() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "nine");
+//         hand.addCard("clubs", "nine");
+//         assert(strategy.getCell(hand, 5).equals("p"));
+//     }
+
+//     @Test
+//     public void testStrategy3() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "four");
+//         hand.addCard("clubs", "four");
+//         assert(strategy.getCell(hand, 5).equals("h"));
+//     }
+
+//     @Test
+//     public void testStrategy4() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "seven");
+//         hand.addCard("clubs", "seven");
+//         assert(strategy.getCell(hand, 7).equals("p$"));
+//     }
+
+//     @Test
+//     public void testStrategy5() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "seven");
+//         hand.addCard("clubs", "seven");
+//         assert(strategy.isSuited(hand));
+//     }
+
+//     @Test
+//     public void testStrategy6() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "seven");
+//         hand.addCard("clubs", "seven");
+//         assert(strategy.getAction(7, hand, true) == Action.HIT);
+//     }
+
+//     @Test
+//     public void testStrategy7() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "six");
+//         hand.addCard("clubs", "seven");
+//         assert(strategy.possible678(hand));
+//     }
+
+//     @Test
+//     public void testStrategy8() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("clubs", "six");
+//         hand.addCard("clubs", "seven");
+//         assert(strategy.getAction(6, hand, true) == Action.HIT);
+//     }
+
+//     @Test
+//     public void testStrategy9() {
+//         Strategy strategy = new Strategy(Rules.H17);
+//         Hand hand = new Hand(0);
+//         hand.addCard("hearts", "nine");
+//         hand.addCard("hearts", "ace");
+//         assert(strategy.getAction(6, hand, true) == Action.STAND);
+//     }
 }
+

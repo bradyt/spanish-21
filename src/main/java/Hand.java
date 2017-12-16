@@ -68,7 +68,12 @@ class Hand {
 
     Card removeCard() {
         numOfCards--;
-        return hand.remove(0);
+        Card card = hand.remove(1);
+        pointTotal = hand.get(0).getPoint();
+        if (pointTotal == 11) {
+            elevens = 1;
+        } else {elevens = 0;}
+        return card;
     }
 
     void lostToDealerBlackjack() {
@@ -93,6 +98,10 @@ class Hand {
 
     State getState() {
         return state;
+    }
+
+    void setState(State state) {
+        this.state = state;
     }
 
     void addCard(Card card) {
@@ -131,8 +140,7 @@ class Hand {
     }
 
     int getNumOfCards() {
-        // return numOfCards;
-        return hand.size();
+        return numOfCards;
     }
 
     ArrayList<Card> getCards() {
@@ -173,7 +181,11 @@ class Hand {
     }
 
     boolean has678() {
-        return false;
+        int product = 1;
+        for (Card card : hand) {
+            product *= card.getPoint();
+        }
+        return numOfCards == 3 && product == 6 * 7 * 8;
     }
 
     boolean has777() {
@@ -195,7 +207,11 @@ class Hand {
     boolean isPair() {
         return (hand.size() == 2 && (hand.get(0).getRank() == hand.get(1).getRank()));
     }
-            
+
+    boolean not4510() {
+        return !containsOneOfFollowingPoints(4, 5, 10);
+    }
+
     boolean containsOneOfFollowingPoints(int... points) {
         // boolean treatAsPair = (bet.isPair() && !List.asList(4, 5, 10).contains(bet.getAValue()));
         for (int point : points) {

@@ -37,6 +37,7 @@ class Shoe {
     Card dealCard() {
         if (shoe.isEmpty()) {
             makeDeck();
+            shuffle();
         }
         return shoe.remove(0);
     }

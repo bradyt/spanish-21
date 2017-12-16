@@ -4,6 +4,23 @@ import static org.junit.Assert.*;
 public class TestHand {
 
     @Test
+    public void testHas678() {
+        Hand hand = new Hand();
+        hand.addCard("clubs", "six");
+        hand.addCard("clubs", "seven");
+        hand.addCard("clubs", "eight");
+        assert(hand.has678());
+    }
+
+    @Test
+    public void testGetPointTotal() {
+        Hand hand = new Hand();
+        hand.addCard("clubs", "three");
+        hand.addCard("clubs", "three");
+        assertEquals(hand.getPointTotal(), 6);
+    }
+
+    @Test
     public void testState() {
         Shoe shoe = new Shoe(0);
         Hand hand = new Hand();
